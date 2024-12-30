@@ -3,6 +3,8 @@ import gsap from "gsap";
 import useStore from "./store";
 
 const flashbangAudio = new Audio("/audio/csgo-flashbang.mp3");
+const jugeAudio = new Audio("/audio/boomeffect.mp3");
+
 
 let flashTween = null;
 
@@ -30,17 +32,44 @@ export const flashUser = () => {
   });
 };
 
-export const triggerMode = () => {
-  const modes = ["impossible", "corner", "reversed"];
-  const selectedMode = modes[Math.floor(Math.random() * modes.length)];
+export const jugeUser = () => {
+  if (flashTween) flashTween.kill();
 
-  // déclenche le mode sélectionné aléatoirement
-  useStore.getState().addMode(selectedMode);
+  jugeAudio.currentTime = 0;
+  jugeAudio.play();
+  document.querySelector(".jugebang").style.opacity = "1";
 
-  setTimeout(() => {
-    useStore.getState().removeMode(selectedMode);
-  }, 1000);
+  flashTween = gsap.to(".jugebang", {
+    opacity: 0,
+    duration: 2,
+    delay: 0.25,
+  });
 };
+
+export const invisible = () => {
+  const snake = document.querySelector(".snakeDot");
+  if (snake) {
+    snake.style.border = "1px solid rgb(0, 0, 0)";
+
+    setTimeout(() => {
+      snake.style.border = "1px solid rgb(83, 83, 83)";
+    }, 1000);
+  } else {
+    console.error("Element with class 'snakeDot' not found.");
+  }
+};
+
+// export const triggerMode = () => {
+//   const modes = ["impossible", "corner", "reversed"];
+//   const selectedMode = modes[Math.floor(Math.random() * modes.length)];
+
+//   // déclenche le mode sélectionné aléatoirement
+//   useStore.getState().addMode(selectedMode);
+
+//   setTimeout(() => {
+//     useStore.getState().removeMode(selectedMode);
+//   }, 1000);
+// };
 
 export const wizz = () => {
   gsap.to("#board", {

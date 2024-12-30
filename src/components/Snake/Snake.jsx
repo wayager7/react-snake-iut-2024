@@ -1,19 +1,23 @@
+import React, { useEffect } from 'react';
 import useStore from "../../utils/store";
 import s from "./Snake.module.scss";
 
 const Snake = ({ data }) => {
   const { skin } = useStore();
 
-  // console.log(data);
+  useEffect(() => {
+    const snakeElement = document.createElement('div');
+    snakeElement.className = 'snakeDot';
+    document.body.appendChild(snakeElement);
+
+    // Nettoyez l'élément lorsque le composant est démonté
+    return () => {
+      document.body.removeChild(snakeElement);
+    };
+  }, []);
 
   const getStyle = (dot, i) => {
     let background = null;
-
-    if (data[data.length - 1] === dot) {
-      background = `url('/skin.jpg') 0 0`;
-    } else {
-      background = `url('/skin.jpg') ${10 * i}px 10px`;
-    }
 
     const style = {
       transform: `translate(${dot[0]}px, ${dot[1]}px)`,

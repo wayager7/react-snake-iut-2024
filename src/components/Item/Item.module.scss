@@ -5,7 +5,20 @@
   border: solid 1px white;
 
   &_trap {
-    background-color: blue;
+    background-color: rgb(255, 0, 0);
+    animation: borderOpacity 5s infinite;
+
+    @keyframes borderOpacity {
+      0% {
+        border-color: rgba(255, 255, 255, 1);
+      }
+      90% {
+        border-color: rgb(255, 255, 255);
+      }
+      100% {
+        border-color: rgba(255, 255, 255, 0);
+      }
+    }
   }
 
   &_food {

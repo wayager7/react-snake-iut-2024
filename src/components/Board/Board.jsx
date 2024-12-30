@@ -6,7 +6,9 @@ import Item from "../Item/Item";
 import {
   defaultControls,
   flashUser,
+  jugeUser,
   generateRandomCoordinates,
+  invisible,
   triggerMode,
   reversedControls,
   wizz,
@@ -133,7 +135,13 @@ const Board = () => {
     } else {
       if (snakeAteTrap === true) {
         // trap execution logic
-        const effects = [flashUser, triggerMode, wizz, netherPortal];
+        const effects = [
+          flashUser,
+          jugeUser, 
+          // invisible, 
+          wizz, 
+          netherPortal
+        ];
 
         const selectedEffect =
           effects[Math.floor(Math.random() * effects.length)];
@@ -282,6 +290,16 @@ const Board = () => {
       gsap.ticker.remove(gameLoop);
     };
   }, [snakeData]);
+
+  useEffect(() => {
+    // Attendez que le composant Snake soit monté avant d'appeler invisible
+    const snakeElement = document.querySelector('.snakeDot');
+    if (snakeElement) {
+      invisible();
+    } else {
+      console.error("Element with class 'snakeDot' not found.");
+    }
+  }, []);
 
   // const pauseGame = () => {
   //   console.log("pause game");
